@@ -1,11 +1,19 @@
-namespace PaymentContext.Tests;
+using PaymentContext.Domain.Entities;
+using PaymentContext.Domain.Enums;
+using PaymentContext.Domain.ValueObjects;
+
+namespace PaymentContext.Tests.Entities;
 
 [TestClass]
 public class StudentTests
 {
     [TestMethod]
-    public void TestMethod1()
+    public void AddSubscription()
     {
-        var student = new Student()
+        var subscription = new Subscription(null);
+        var student = new Student(new Name("Pedro", "Martinelli"), new Document("12345678", EDocumentType.CPF),
+            new Email("pedro@email.com"));
+        student.AddSubscription(subscription);
     }
 }
+
