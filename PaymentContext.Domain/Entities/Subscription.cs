@@ -1,6 +1,10 @@
+using Flunt.Notifications;
+using Flunt.Validations;
+using PaymentContext.Shared.Entities;
+
 namespace PaymentContext.Domain.Entities;
 
-public class Subscription
+public class Subscription : Entity
 {
     private readonly IList<Payment> _payments;
 
@@ -21,6 +25,10 @@ public class Subscription
 
     public void AddPayment(Payment payment)
     {
+        AddNotifications(new Contract<Notification>()
+            .Requires()
+        );
+
         _payments.Add(payment);
     }
 
