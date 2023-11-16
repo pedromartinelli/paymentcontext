@@ -11,7 +11,7 @@ public class StudentTests
     public void AddSubscription()
     {
         var subscription = new Subscription(null);
-        var student = new Student(new Name("Pedro", "Martinelli"), new Document("12345678", EDocumentType.CPF),
+        var student = new Student(new Name("Pedro", "Martinellis"), new Document("12345678", EDocumentType.CPF),
             new Email("pedro@email.com"));
         student.AddSubscription(subscription);
     }
