@@ -2,7 +2,7 @@ namespace PaymentContext.Domain.Entities;
 
 public class Subscription
 {
-    private IList<Payment> _payments;
+    private readonly IList<Payment> _payments;
 
     public Subscription(DateTime? expireDate)
     {

@@ -1,11 +1,56 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "Flunt/2.0.5": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Flunt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Flunt.dll": {}
+        }
+      },
+      "PaymentContext.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Flunt": "2.0.5"
+        },
+        "compile": {
+          "bin/placeholder/PaymentContext.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PaymentContext.Shared.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Flunt/2.0.5": {
+      "sha512": "CMgq8FUYjkHzyZT3PhkUwZyy79mudON+EL4b0SAT7BfIOJ2CNypwnbdA0cPHAM2CYQfO2L8ubNJCiBHQOIv2pA==",
+      "type": "package",
+      "path": "flunt/2.0.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "flunt.2.0.5.nupkg.sha512",
+        "flunt.nuspec",
+        "icon.png",
+        "lib/netstandard2.0/Flunt.dll"
+      ]
+    },
+    "PaymentContext.Shared/1.0.0": {
+      "type": "project",
+      "path": "../PaymentContext.Shared/PaymentContext.Shared.csproj",
+      "msbuildProject": "../PaymentContext.Shared/PaymentContext.Shared.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "Flunt >= 2.0.5",
+      "PaymentContext.Shared >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\IST\\.nuget\\packages\\": {},
@@ -38,7 +83,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Prog\\DDD-balta\\PaymentContext\\PaymentContext.Shared\\PaymentContext.Shared.csproj": {
+              "projectPath": "C:\\Prog\\DDD-balta\\PaymentContext\\PaymentContext.Shared\\PaymentContext.Shared.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -50,6 +99,12 @@
     "frameworks": {
       "net7.0": {
         "targetAlias": "net7.0",
+        "dependencies": {
+          "Flunt": {
+            "target": "Package",
+            "version": "[2.0.5, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
