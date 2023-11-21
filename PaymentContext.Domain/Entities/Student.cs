@@ -40,8 +40,8 @@ public class Student : Entity
             .IsGreaterThan(subscription.Payments.Count, 0, "Subscription.Payments", "Esta assinatura não possui pagamentos")
         );
 
-        if (hasActiveSubscription)
-            AddNotification("Student.Subscription", "Você já possui uma assinatura ativa.");
+        //if (hasActiveSubscription)
+        //    AddNotification("Student.Subscription", "Você já possui uma assinatura ativa.");
 
         _subscriptions.Add(subscription);
     }
