@@ -18,8 +18,8 @@ namespace PaymentContext.Domain.Commands
         public string Document { get; set; }
         public string Email { get; set; }
 
-        public string BarCode { get; private set; }
-        public string BoletoNumber { get; private set; }
+        public string BarCode { get; set; }
+        public string BoletoNumber { get; set; }
 
         public string PaymentNumber { get; set; }
         public DateTime PaidDate { get; set; }
@@ -39,10 +39,15 @@ namespace PaymentContext.Domain.Commands
         public string Country { get; set; }
         public string ZipCode { get; set; }
 
+        //Fail Fast Validation
         public void Validate()
         {
             AddNotifications(new Contract<Notification>()
-            
+                .Requires()
+                .IsGreaterThan(FirstName, 3, "Name.FirstName", "Nome deve conter pelo menos 3 caracteres")
+                .IsLowerThan(FirstName, 40, "Name.FirstName", "Nome deve conter menos que 40 caracteres")
+                .IsGreaterThan(LastName, 3, "Name.LastName", "Sobrenome deve conter pelo menos 3 caracteres")
+                .IsLowerThan(LastName, 40, "Name.LastName", "Sobrenome deve conter menos que 40 caracteres")
             );
         }
     }
