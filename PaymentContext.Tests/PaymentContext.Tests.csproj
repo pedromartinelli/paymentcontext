@@ -24,4 +24,8 @@
     <ProjectReference Include="..\PaymentContext.Domain\PaymentContext.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Handlers\" />
+  </ItemGroup>
+
 </Project>

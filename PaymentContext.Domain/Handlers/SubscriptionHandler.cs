@@ -14,7 +14,10 @@ using Document = PaymentContext.Domain.ValueObjects.Document;
 
 namespace PaymentContext.Domain.Handlers
 {
-    public class SubscriptionHandler : Notifiable<Notification>, IHandler<CreateBoletoSubscriptionCommand>, IHandler<CreatePayPalSubscriptionCommand>
+    public class SubscriptionHandler : Notifiable<Notification>,
+        IHandler<CreateBoletoSubscriptionCommand>,
+        IHandler<CreatePayPalSubscriptionCommand>,
+        IHandler<CreateCreditCardSubscriptionCommand>
     {
         private readonly IStudentRepository _studentRepository;
         private readonly IEmailService _emailService;
@@ -127,6 +130,58 @@ namespace PaymentContext.Domain.Handlers
 
             // Retornar informações
             return new CommandResult(true, "Assinatura realizada com sucesso");
+        }
+
+        public ICommandResult Handle(CreateCreditCardSubscriptionCommand command)
+        {
+            command.Validate();
+            if (!command.IsValid)
+            {
+                AddNotifications(command);
+                return new CommandResult(false, "Não foi possível realizar sua assinatura");
+            }
+
+            // Verificar documento
+            if (_studentRepository.DocumentExists(command.Document))
+                AddNotification("Document", "Este CPF já está em uso");
+
+            // verificar email
+            if (_studentRepository.EmailExists(command.Email))
+                AddNotification("Email", "Este E-mail já está em uso");
+
+            // gerar os VOs
+            var name = new Name(command.FirstName, command.LastName);
+            var document = new Document(command.Document, EDocumentType.CPF);
+            var email = new Email(command.Email);
+            var address = new Address(command.Street, command.HouseNumber, command.Neighborhood, command.City,
+                command.State, command.Country, command.ZipCode);
+
+            // gerar as entidades
+            var student = new Student(name, document, email);
+            var subscription = new Subscription(DateTime.Now.AddMonths(1));
+            var payment = new CreditCardPayment(command.PaidDate, command.ExpireDate, command.Total, command.TotalPaid, 
+                command.Payer, document, address, email, command.CardHolderName, command.CardNumber, 
+                command.LastTransactionNumber);
+
+            // relacionamentos
+            subscription.AddPayment(payment);
+            student.AddSubscription(subscription);
+
+            // agrupar as validações
+            AddNotifications(name, document, email, address, student, subscription, payment);
+
+            // checar as notificações
+            if (!IsValid) return new CommandResult(false, "Não foi possível realizar sua assinatura");
+
+            // salvar as informações
+            _studentRepository.CreateSubscription(student);
+
+            // enviar email de boas vindas
+            _emailService.SendEmail(student.Name.ToString(), student.Email.Address, "Bem vindo ao balta.io!", "Sua assinatura foi criada com sucesso");
+
+            // retornar informações
+            return new CommandResult(true, "Assinatura realizada com sucesso!");
+
         }
     }
 }
