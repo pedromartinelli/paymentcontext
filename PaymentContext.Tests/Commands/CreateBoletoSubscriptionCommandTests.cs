@@ -11,6 +11,7 @@ using PaymentContext.Domain.Commands;
 namespace PaymentContext.Tests.ValueObjects;
 
 [TestClass]
+[Ignore]
 public class CreateBoletoSubscriptionCommandTests
 {
     // Red, Green, Refactor

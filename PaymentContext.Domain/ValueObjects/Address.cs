@@ -23,7 +23,7 @@ namespace PaymentContext.Domain.ValueObjects
 
             AddNotifications(new Contract<Notification>()
                 .Requires()
-                .IsGreaterThan(Street, 3, "Address.Street", "A rua deve ter pelo menos 3 caracteres")
+                .IsGreaterThan(Street.Length, 3, "Address.Street", "A rua deve ter pelo menos 3 caracteres")
             );
         }
 
