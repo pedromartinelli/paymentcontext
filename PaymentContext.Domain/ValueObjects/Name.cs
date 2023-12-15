@@ -1,6 +1,4 @@
-﻿using Flunt.Notifications;
-using Flunt.Validations;
-using PaymentContext.Shared.ValueObjects;
+﻿using PaymentContext.Shared.ValueObjects;
 
 namespace PaymentContext.Domain.ValueObjects;
 
@@ -25,6 +23,6 @@ public class Name : ValueObject
 
     public override string ToString()
     {
-        return $"{FirstName} ${LastName}";
+        return $"{FirstName} {LastName}";
     }
 }
